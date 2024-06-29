@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
+// Trashbin image from public
 import trashBin from '../../public/trashbin.svg';
 
+// Getting tasks scheduled for a particular date
 const getTodayTasks = (date, tasks) => {
   let todayTasks = [];
   for (let i = 0; i < tasks.length; i++) {
@@ -12,6 +14,7 @@ const getTodayTasks = (date, tasks) => {
   return todayTasks;
 };
 
+// Getting tasks scheduled for a future date
 const getFutureTasks = (date, tasks, setTasks) => {
   let futureTasks = [];
   for (let i = 0; i < tasks.length; i++) {
@@ -22,13 +25,15 @@ const getFutureTasks = (date, tasks, setTasks) => {
   return futureTasks;
 };
 
+// Tasks component
 function Tasks({ date, tasks, setTasks }) {
   const [newTask, setNewTask] = useState();
 
   if (!date) {
-    date = new Date();
+    date = new Date(); // Sets the date to current date if no date is selected
   }
 
+  // Adding new task to task list
   const addNewTask = () => {
     setTasks([
       ...tasks,
@@ -36,6 +41,7 @@ function Tasks({ date, tasks, setTasks }) {
     ]);
   };
 
+  // Deleting a task from the task list using it's id
   const delTask = (id) => {
     const temp = [];
     for (let i = 0; i < tasks.length; i++) {
@@ -46,6 +52,7 @@ function Tasks({ date, tasks, setTasks }) {
     setTasks(temp);
   };
 
+  // Filling divs containing tasks for the selected day into an array
   const todayTaskList = getTodayTasks(date, tasks);
   const todayTasks = [];
   for (let i = 0; i < todayTaskList.length; i++) {
@@ -68,6 +75,7 @@ function Tasks({ date, tasks, setTasks }) {
     );
   }
 
+  // Filling divs containing future tasks into an array
   const futureTaskList = getFutureTasks(date, tasks);
   const futureTasks = [];
   for (let i = 0; i < futureTaskList.length; i++) {

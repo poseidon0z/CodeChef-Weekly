@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 
+// Gets the number of days in a month
 const getDaysInMonth = (date) => {
   const year = date.getFullYear();
   const month = date.getMonth();
-  return new Date(year, month + 1, 0).getDate();
+  return new Date(year, month + 1, 0).getDate(); // 0 makes the date underflow, hence generating the last day of the month we need
 };
+
+// Gets the day on which the first date of the month occurs
 const getFirstDayOfMonth = (date) => {
   const year = date.getFullYear();
   const month = date.getMonth();
   return (new Date(year, month, 1).getDay() + 6) % 7;
 };
 
+// Get the date at the start of the month of the provided date
 const startOfMonth = (date) => {
   const year = date.getFullYear();
   const month = date.getMonth();
   return new Date(year, month, 1);
 };
 
+// Get tasks scheduled for a particular date from the task list
 const getTodayTasks = (date, tasks) => {
   let todayTasks = [];
   for (let i = 0; i < tasks.length; i++) {
@@ -27,6 +32,7 @@ const getTodayTasks = (date, tasks) => {
   return todayTasks;
 };
 
+// Calendar component
 const Calendar = ({ tasks, selectedDate, setSelectedDate }) => {
   const currentDate = new Date();
   const [displayDate, setDisplayDate] = useState(startOfMonth(currentDate));
@@ -40,21 +46,23 @@ const Calendar = ({ tasks, selectedDate, setSelectedDate }) => {
 
   // Add special css effects to a date when required
   const specialColours = (date) => {
-    if (date === currentDate.getDate()) {
-      if (
-        displayDate.toDateString() == startOfMonth(currentDate).toDateString()
-      ) {
-        return 'border-2 font-semibold border-yellow-500 bg-yellow-200';
-      } else {
-        return 'border-2 font-semibold border-yellow-500';
-      }
-    } else if (
+    // In current date and month
+    if (
+      date === currentDate.getDate() &&
+      displayDate.toDateString() == startOfMonth(currentDate).toDateString()
+    ) {
+      return 'border-2 font-semibold border-yellow-500 bg-yellow-200';
+    }
+    // In selected date
+    if (
       selectedDate &&
       date === selectedDate.getDate() &&
       displayDate.toDateString() == startOfMonth(selectedDate).toDateString()
     ) {
       return 'bg-[#5ED3EC]';
     }
+
+    // If there are any tasks scheduled for today
     if (
       getTodayTasks(
         new Date(displayDate.getFullYear(), displayDate.getMonth(), date),
@@ -63,8 +71,14 @@ const Calendar = ({ tasks, selectedDate, setSelectedDate }) => {
     ) {
       return 'bg-[#F77600]';
     }
+
+    // In current date, but different month
+    if (date === currentDate.getDate()) {
+      return 'border-2 font-semibold border-yellow-500';
+    }
   };
 
+  // Handle clicking on a date
   const handleDateClick = (date) => {
     setSelectedDate(
       new Date(displayDate.getFullYear(), displayDate.getMonth(), date)
@@ -77,6 +91,7 @@ const Calendar = ({ tasks, selectedDate, setSelectedDate }) => {
     year: 'numeric',
   });
 
+  // Array to hold all days which are to be added to the calendar
   const calendarDays = [];
 
   // Add previous month's dates
@@ -129,32 +144,43 @@ const Calendar = ({ tasks, selectedDate, setSelectedDate }) => {
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg w-fit h-fit my-5 w-full sm:w-5/6 lg:w-4/6 xl:w-7/12">
-      <div className="flex w-full justify-between items-center mb-6">
-        <div className="text-4xl font-black">{monthYear}</div>
-        <div className="w-20 flex justify-between">
-          <button className="text-3xl mr-auto" onClick={() => changeMonth(-1)}>
-            &lt;
-          </button>
-          <button className="text-3xl ml-auto" onClick={() => changeMonth(+1)}>
-            &gt;
-          </button>
-        </div>
-      </div>
-      <div className="flex flex-col justify-center w-full aspect-square">
-        <div className="grid grid-cols-7 gap-0">
-          {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((day) => (
-            <div
-              key={day}
-              className="text-xl w-full aspect-square flex justify-center items-center font-bold"
+    <>
+      <div className="bg-white p-6 rounded-lg shadow-lg w-fit h-fit my-5 w-full sm:w-5/6 lg:w-4/6 xl:w-7/12">
+        {/* Heading section */}
+        <div className="flex w-full justify-between items-center mb-6">
+          <div className="text-4xl font-black">{monthYear}</div>
+          <div className="w-20 flex justify-between">
+            <button
+              className="text-3xl mr-auto"
+              onClick={() => changeMonth(-1)}
             >
-              {day}
-            </div>
-          ))}
-          {calendarDays}
+              &lt;
+            </button>
+            <button
+              className="text-3xl ml-auto"
+              onClick={() => changeMonth(+1)}
+            >
+              &gt;
+            </button>
+          </div>
+        </div>
+
+        {/* Calendar display */}
+        <div className="flex flex-col justify-center w-full aspect-square">
+          <div className="grid grid-cols-7 gap-0">
+            {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((day) => (
+              <div
+                key={day}
+                className="text-xl w-full aspect-square flex justify-center items-center font-bold"
+              >
+                {day}
+              </div>
+            ))}
+            {calendarDays}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
