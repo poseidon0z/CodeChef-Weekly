@@ -91,7 +91,7 @@ const Calendar = ({ tasks, selectedDate, setSelectedDate }) => {
   for (let i = firstDisplayDay - 1; i >= 0; i--) {
     calendarDays.push(
       <div
-        className="border border-[#D5D4DF] bg-[#F2F3F7] w-20 h-20 flex justify-center items-center rounded-full text-[#A8A8A8]"
+        className="border border-[#D5D4DF] bg-[#F2F3F7] w-full aspect-square h-full flex justify-center items-center rounded-full text-[#A8A8A8]"
         key={`prev-${i}`}
       >
         {prevMonthDays - i}
@@ -106,7 +106,7 @@ const Calendar = ({ tasks, selectedDate, setSelectedDate }) => {
       <div
         onClick={() => handleDateClick(i)}
         className={
-          'border border-border-[#D5D4DF] w-20 h-20 flex justify-center items-center rounded-full cursor-pointer transition-colors duration-300 hover:bg-gray-200 ' +
+          'border border-border-[#D5D4DF] w-full aspect-square h-full flex justify-center items-center rounded-full cursor-pointer transition-colors duration-300 hover:bg-gray-200 ' +
           specialColours(i)
         }
         key={i}
@@ -120,7 +120,7 @@ const Calendar = ({ tasks, selectedDate, setSelectedDate }) => {
   for (let i = 1; calendarDays.length % 7 != 0; i++) {
     calendarDays.push(
       <div
-        className="border border-[#D5D4DF] bg-[#F2F3F7] w-20 h-20 flex justify-center items-center rounded-full text-[#A8A8A8]"
+        className="border border-[#D5D4DF] bg-[#F2F3F7] w-full aspect-square h-full flex justify-center items-center rounded-full text-[#A8A8A8]"
         key={`next-${i}`}
       >
         {i}
@@ -129,24 +129,24 @@ const Calendar = ({ tasks, selectedDate, setSelectedDate }) => {
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg w-fit h-fit">
+    <div className="bg-white p-6 rounded-lg shadow-lg w-fit h-fit my-5 w-full sm:w-5/6 lg:w-4/6 xl:w-7/12">
       <div className="flex w-full justify-between items-center mb-6">
         <div className="text-4xl font-black">{monthYear}</div>
-        <div>
-          <button className="text-3xl mx-5" onClick={() => changeMonth(-1)}>
+        <div className="w-20 flex justify-between">
+          <button className="text-3xl mr-auto" onClick={() => changeMonth(-1)}>
             &lt;
           </button>
-          <button className="text-3xl mx-5" onClick={() => changeMonth(+1)}>
+          <button className="text-3xl ml-auto" onClick={() => changeMonth(+1)}>
             &gt;
           </button>
         </div>
       </div>
-      <div className="flex flex-col justify-center h-[35rem]">
+      <div className="flex flex-col justify-center w-full aspect-square">
         <div className="grid grid-cols-7 gap-0">
           {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((day) => (
             <div
               key={day}
-              className="text-xl w-20 h-20 flex justify-center items-center font-bold"
+              className="text-xl w-full aspect-square flex justify-center items-center font-bold"
             >
               {day}
             </div>

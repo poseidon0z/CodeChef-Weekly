@@ -13,13 +13,15 @@ function App() {
 
   return (
     <>
-      <div className="flex h-full min-h-fit text-[#364043]">
-        <Tasks
-          date={selectedDate}
-          tasks={taskList}
-          setTasks={setTaskList}
-        ></Tasks>
-        <div className="bg-[#249EE3] w-8/12 flex justify-center items-center h-full min-h-fit">
+      <div className="flex flex-col md:flex-row h-fit min-h-screen text-[#364043] bg-[#249EE3] ">
+        <div className="flex flex-col min-h-fit bg-[#36DBE5] w-full md:w-4/12">
+          <Tasks
+            date={selectedDate}
+            tasks={taskList}
+            setTasks={setTaskList}
+          ></Tasks>
+        </div>
+        <div className="w-full md:w-8/12 flex justify-center items-center h-fit md:min-h-screen">
           <Calendar
             tasks={taskList}
             selectedDate={selectedDate}

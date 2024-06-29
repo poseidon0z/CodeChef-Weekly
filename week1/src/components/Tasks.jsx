@@ -50,7 +50,7 @@ function Tasks({ date, tasks, setTasks }) {
   const todayTasks = [];
   for (let i = 0; i < todayTaskList.length; i++) {
     todayTasks.push(
-      <div className="flex justify-between items-center w-full text-xl ml-2 my-1 rounded-lg p-2 bg-[#9AEDF2]">
+      <div className="flex justify-between items-center w-full md:text-lg lg:text-xl ml-2 my-1 rounded-lg p-2 bg-[#9AEDF2]">
         {todayTaskList[i].task}
         <img
           src={trashBin}
@@ -62,7 +62,7 @@ function Tasks({ date, tasks, setTasks }) {
   }
   if (todayTaskList.length == 0) {
     todayTasks.push(
-      <div className="inline-block w-full text-xl ml-2 my-1 rounded-lg p-2">
+      <div className="inline-block w-full md:text-lg lg:text-xl ml-2 my-1 rounded-lg p-2">
         No tasks for today!
       </div>
     );
@@ -72,14 +72,14 @@ function Tasks({ date, tasks, setTasks }) {
   const futureTasks = [];
   for (let i = 0; i < futureTaskList.length; i++) {
     futureTasks.push(
-      <div className="inline-block w-full text-xl ml-2 my-1 rounded-lg p-2 bg-[#9AEDF2]">
+      <div className="inline-block w-full md:text-lg lg:text-xl ml-2 my-1 rounded-lg p-2 bg-[#9AEDF2]">
         {futureTaskList[i]}
       </div>
     );
   }
   if (futureTaskList.length == 0) {
     futureTasks.push(
-      <div className="inline-block w-full text-xl ml-2 my-1 rounded-lg p-2">
+      <div className="inline-block w-full md:text-lg lg:text-xl ml-2 my-1 rounded-lg p-2">
         No upcoming tasks!
       </div>
     );
@@ -87,46 +87,53 @@ function Tasks({ date, tasks, setTasks }) {
 
   return (
     <>
-      <div className="flex flex-col h-full bg-[#36DBE5] w-4/12">
-        {/* Date */}
-        <div className="flex w-full">
-          <div className="flex items-middle ml-auto p-5">
-            <div className="text-8xl text-white">
-              {date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}
+      {/* Date */}
+      <div className="flex w-full">
+        <div className="flex items-middle ml-auto p-5">
+          <div className="text-8xl text-white">
+            {date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}
+          </div>
+          <div className="flex flex-col h-full justify-end text-4xl px-2 py-1 text-white tracking-wider font-semibold">
+            <div className="uppercase">
+              {date.toLocaleString('default', { month: 'long' })}
             </div>
-            <div className="flex flex-col h-full justify-end text-4xl px-2 py-1 text-white tracking-wider font-semibold">
-              <div className="uppercase">
-                {date.toLocaleString('default', { month: 'long' })}
-              </div>
-              <div>{date.toLocaleString('default', { year: 'numeric' })}</div>
-            </div>
+            <div>{date.toLocaleString('default', { year: 'numeric' })}</div>
           </div>
         </div>
+      </div>
 
+      {/* Tasks section */}
+      <div className="flex flex-col sm:flex-row md:flex-col">
         {/* Today section */}
-        <div className="px-5">
-          <div className="text-3xl font-semibold my-5">TODAY'S DEADLINES</div>
+        <div className="px-5 w-full">
+          <div className="md:text-2xl lg:text-3xl font-semibold my-5">
+            TODAY'S DEADLINES
+          </div>
           {todayTasks}
         </div>
 
         {/* Upcoming section */}
-        <div className="px-5">
-          <div className="text-3xl font-semibold my-5">UPCOMING DEADLINES</div>
+        <div className="px-5 w-full mb-5">
+          <div className="md:text-2xl lg:text-3xl font-semibold my-5">
+            UPCOMING DEADLINES
+          </div>
           {futureTasks}
         </div>
+      </div>
 
-        {/* New task */}
-        <div className="flex mt-auto p-5 justify-center items-center">
+      {/* New task */}
+      <div className="mx-auto mt-auto w-11/12 mb-3">
+        <div className="flex mx-auto justify-center items-center">
           <input
             type="text"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
-            className="border border-gray-300 rounded p-2"
+            className="border border-gray-300 rounded p-2 w-2/3"
             placeholder="Enter a new task"
           />
           <button
             onClick={addNewTask}
-            className="bg-blue-500 text-white rounded p-2 px-5 mx-2"
+            className="bg-blue-500 text-white rounded p-2 px-5 ml-2 w-1/3"
           >
             Add
           </button>
